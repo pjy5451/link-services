@@ -12,6 +12,21 @@
     });
   });
 
+  document.addEventListener("click", (e) => {
+    const s = e.target.closest("#share-send");
+    if (!s) return;
+    const url = ($("#share") && $("#share").value) || "";
+    if (!url) return;
+    if (typeof navigator.share === "function") {
+      navigator.share({ title: "그때열기", text: "정한 시각에 열리는 링크", url }).catch(() => {});
+      return;
+    }
+    navigator.clipboard.writeText(url).then(() => {
+      s.textContent = "복사됨";
+      setTimeout(() => (s.textContent = "카톡 등으로 보내기"), 1500);
+    }).catch(() => {});
+  });
+
   // 기본값: 다음 날 0시
   const openInput = document.querySelector("input[name=open_at]");
   if (openInput && !openInput.value) {
