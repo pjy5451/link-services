@@ -1,0 +1,17 @@
+{
+  "name": "bangdojang",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "typecheck": "tsc --noEmit",
+    "db:local": "wrangler d1 migrations apply bangdojang-db --local",
+    "db:remote": "wrangler d1 migrations apply bangdojang-db --remote",
+    "deploy": "wrangler deploy",
+    "release": "wrangler d1 migrations apply bangdojang-db --remote && wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261110.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.160.0"
+  }
+}

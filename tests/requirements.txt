@@ -1,0 +1,3 @@
+httpx
+pillow
+# UI 테스트(--ui)용: pip install playwright && playwright install chromium

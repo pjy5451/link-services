@@ -1,0 +1,25 @@
+name = "hanbeonbom"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"
+
+[vars]
+SITE_NAME = "한번봄"
+SITE_TAGLINE = "보고 나면 사라지는 사진"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hanbeonbom-db"
+database_id = "00000000-0000-0000-0000-000000000000" # wrangler d1 create 후 받은 ID로 교체
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "hanbeonbom-files"
+
+[triggers]
+crons = ["*/10 * * * *"] # 10분마다 만료·소진 사진 삭제
+
+[observability]
+enabled = true

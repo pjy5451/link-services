@@ -1,0 +1,28 @@
+from PIL import Image, ImageDraw
+from playwright.sync_api import sync_playwright
+import os; os.makedirs("shots", exist_ok=True)
+B = "http://127.0.0.1:8788"
+im = Image.new("RGB", (1400, 900), (235, 230, 220)); d = ImageDraw.Draw(im)
+d.rectangle((150, 150, 1250, 750), outline=(60, 60, 60), width=8); d.text((200, 200), "ID CARD SAMPLE", fill=(0, 0, 0))
+ex = Image.Exif(); ex[0x8769] = {0x9003: "2026:11:11 09:00:00"}; ex[0x010F] = "SecretPhoneMaker"; im.save("/tmp/doc.jpg", "JPEG", exif=ex.tobytes())
+with sync_playwright() as p:
+    br = p.chromium.launch(args=["--no-sandbox"])
+    pg = br.new_page(viewport={"width": 420, "height": 900}, device_scale_factor=2)
+    errs = []; pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
+    bodies = []; pg.on("request", lambda r: bodies.append(r.post_data_buffer) if "/api/upload" in r.url else None)
+    pg.goto(B + "/"); pg.screenshot(path="shots/hbb_1_upload.png", full_page=True)
+    pg.set_input_files("input[name=file]", "/tmp/doc.jpg")
+    pg.select_option("select[name=views]", "1")
+    pg.fill("input[name=wm_text]", "○○부동산 제출용 · 2026-11-11")
+    pg.check("input[name=agree]"); pg.click("button:has-text('링크 만들기')")
+    pg.wait_for_selector("#result:not(.hidden)", timeout=15000)
+    print("uploaded has EXIF:", any(b and (b"Exif" in b or b"SecretPhoneMaker" in b) for b in bodies), "| raw had EXIF:", b"SecretPhoneMaker" in open("/tmp/doc.jpg","rb").read())
+    share = pg.input_value("#share"); manage = pg.input_value("#manage")
+    pg.screenshot(path="shots/hbb_2_result.png", full_page=True)
+    v = br.new_page(viewport={"width": 420, "height": 900}, device_scale_factor=2, user_agent="Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1")
+    v.goto(share); v.screenshot(path="shots/hbb_3_gate.png", full_page=True)
+    v.click("button:has-text('사진 보기')"); v.wait_for_selector("#viewer:not(.hidden)", timeout=15000); v.wait_for_timeout(500)
+    v.screenshot(path="shots/hbb_4_viewer.png", full_page=True)
+    v.goto(share); print("revisit:", v.locator("h1").inner_text())
+    pg.goto(manage); pg.screenshot(path="shots/hbb_5_manage.png", full_page=True)
+    print("console errors:", errs); br.close()

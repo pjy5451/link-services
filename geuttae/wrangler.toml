@@ -1,0 +1,25 @@
+name = "geuttae"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"
+
+[vars]
+SITE_NAME = "그때열기"
+SITE_TAGLINE = "정한 시각에 열리는 링크"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "geuttae-db"
+database_id = "00000000-0000-0000-0000-000000000000" # wrangler d1 create 후 받은 ID로 교체
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "geuttae-files"
+
+[triggers]
+crons = ["*/15 * * * *"] # 15분마다 종료된 메시지 삭제(접속 시에도 즉시 삭제)
+
+[observability]
+enabled = true

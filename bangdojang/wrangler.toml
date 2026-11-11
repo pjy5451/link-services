@@ -1,0 +1,26 @@
+name = "bangdojang"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"
+
+[vars]
+SITE_NAME = "방도장"
+SITE_TAGLINE = "입주·퇴실 집 상태 기록"
+MAX_PHOTOS = "120"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bangdojang-db"
+database_id = "00000000-0000-0000-0000-000000000000" # wrangler d1 create 후 받은 ID로 교체
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "bangdojang-files"
+
+[triggers]
+crons = ["17 3 * * *"] # 매일 03:17 UTC 만료 기록 정리
+
+[observability]
+enabled = true
