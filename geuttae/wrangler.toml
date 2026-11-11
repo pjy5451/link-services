@@ -12,7 +12,7 @@ SITE_TAGLINE = "정한 시각에 열리는 링크"
 [[d1_databases]]
 binding = "DB"
 database_name = "geuttae-db"
-database_id = "00000000-0000-0000-0000-000000000000" # wrangler d1 create 후 받은 ID로 교체
+database_id = "6cb1fd46-f5a7-4e28-b922-fad7656f79c8" # wrangler d1 create 후 받은 ID로 교체
 
 [[r2_buckets]]
 binding = "BUCKET"
