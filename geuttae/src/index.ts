@@ -51,7 +51,8 @@ function createPage(env: Env): Response {
 <section class="card hidden" id="capresult"><h2>예약 링크가 만들어졌어요</h2>
 <p id="capwhen" class="note ok"></p>
 <p class="small"><b>보낼 링크</b> — 지금 보내도 그 시각 전에는 열리지 않아요.</p>
-<div class="linkbox"><input readonly id="share"><button class="btn ghost sm copy">복사</button></div>
+<div class="linkbox"><input readonly id="share"><button type="button" class="btn ghost sm copy">복사</button></div>
+<button type="button" class="btn ghost block" id="share-send">카톡 등으로 보내기</button>
 <p class="small"><b>관리 링크</b> — 내용 확인·삭제용. 다시 보여드릴 수 없으니 꼭 보관하세요.</p>
 <div class="linkbox"><input readonly id="manage"><button class="btn ghost sm copy">복사</button></div></section>`,
   }));

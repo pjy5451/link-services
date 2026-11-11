@@ -6,6 +6,8 @@ c = httpx.Client(base_url=B, follow_redirects=False, timeout=30, headers={"User-
 def ok(cond, msg):
     print(("PASS " if cond else "FAIL ") + msg)
     if not cond: sys.exit(1)
+home = c.get("/")
+ok(home.status_code == 200 and re.search(r'id="capresult"[\s\S]*id="share-send"[^>]*>카톡 등으로 보내기', home.text) is not None, "생성 결과 화면에 공유 버튼")
 def d1(sql):
     subprocess.run(["npx", "wrangler", "d1", "execute", "geuttae-db", "--local", "--command", sql], cwd=__import__("os").path.join(__import__("os").path.dirname(__file__),"..","geuttae"), capture_output=True)
 def local(dt): return dt.astimezone(KST).strftime("%Y-%m-%dT%H:%M")
