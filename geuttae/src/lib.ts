@@ -72,7 +72,7 @@ export function layout(env: BaseEnv, o: PageOpts): string {
 <meta name="description" content="${metaD}">
 <link rel="icon" href="data:,"><link rel="stylesheet" href="/style.css">${scripts}</head>
 <body class="${esc(o.bodyClass ?? "")}">
-<header class="top"><a class="brand" href="/">${site}</a><span class="tagline">${esc(env.SITE_TAGLINE ?? "")}</span></header>
+<header class="top"><a class="brand" href="/">${site}</a></header>
 <main class="wrap">${o.body}</main>
 <footer class="foot"><a href="/terms">이용약관·운영정책</a> · <a href="/report">신고하기</a></footer>
 </body></html>`;

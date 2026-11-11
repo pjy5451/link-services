@@ -37,24 +37,28 @@ function createPage(env: Env): Response {
   return html(layout(env, {
     meta: { title: "그때열기 — 정한 시각에 열리는 링크", description: "생일 0시, 기념일, 발표 시각… 미리 보내 두면 그 시각에 열리고, 정한 시간이 지나면 사라져요." },
     scripts: ["/geuttae.js"],
-    body: `<section class="hero"><h1>그 시각이 되면 열리는 링크</h1>
-<p class="muted">생일 0시, 기념일, 발표 시각… 지금 미리 보내 두세요. 그 전에는 카운트다운만 보이고, 정한 시간이 지나면 사라져요.</p></section>
-<section class="card" id="creator"><form class="form" id="capform">
-<div class="row"><label>보내는 사람 (선택)<input name="sender" maxlength="20" placeholder="예: 준영"></label>
-<label>열리는 시각 (한국 시간)<input type="datetime-local" name="open_at" required></label></div>
-<label>잠겨 있는 동안 보일 문구 (선택)<input name="teaser" maxlength="60" placeholder="예: 생일 0시에 열어 봐 🎂"></label>
-<label>메시지<textarea name="message" rows="6" maxlength="2000" required placeholder="열린 뒤에 보일 내용"></textarea></label>
-<label>사진 (선택)<input type="file" name="photo" accept="image/*"><span class="hint">올릴 때 촬영 위치(GPS)·기기 정보는 자동으로 지워져요.</span></label>
+    body: `<section class="home">
+<div class="home-copy"><p class="eyebrow">${esc(env.SITE_TAGLINE)}</p>
+<h1>그 시각이 되면<br>열리는 링크.</h1>
+<p class="lead">생일 0시, 기념일, 발표 시각… 지금 미리 보내 두세요. 그 전에는 카운트다운만 보이고, 정한 시간이 지나면 사라져요.</p></div>
+<div class="home-side">
+<section class="panel" id="creator"><form class="form" id="capform">
+<label>보내는 사람 (선택)<input name="sender" maxlength="20" placeholder="예: 준영"></label>
+<label>열리는 시각 (한국 시간)<input type="datetime-local" name="open_at" required></label>
+<label>잠겨 있는 동안 보일 문구 (선택)<input name="teaser" maxlength="60" placeholder="예: 생일 0시에 열어 봐"></label>
+<label>메시지<textarea name="message" rows="4" maxlength="2000" required placeholder="열린 뒤에 보일 내용"></textarea></label>
+<label>사진 (선택)<input type="file" name="photo" accept="image/*"><span class="hint">촬영 위치와 기기 정보는 올릴 때 지워져요.</span></label>
 <label>사라지는 시각<select name="close_after">${close}</select></label>
 <label class="check"><input type="checkbox" name="agree" value="1" required><span>불법촬영물·타인의 사진 등 <a href="/terms">금지 콘텐츠</a>가 아님을 확인합니다.</span></label>
-<button class="btn">예약 링크 만들기</button><p class="small muted" id="capstatus"></p></form></section>
-<section class="card hidden" id="capresult"><h2>예약 링크가 만들어졌어요</h2>
+<button class="btn block">예약 링크 만들기</button><p class="small muted" id="capstatus"></p></form></section>
+<section class="panel hidden" id="capresult"><h2>예약 링크가 만들어졌어요</h2>
 <p id="capwhen" class="note ok"></p>
 <p class="small"><b>보낼 링크</b> — 지금 보내도 그 시각 전에는 열리지 않아요.</p>
 <div class="linkbox"><input readonly id="share"><button type="button" class="btn ghost sm copy">복사</button></div>
-<button type="button" class="btn ghost block" id="share-send">카톡 등으로 보내기</button>
+<button type="button" class="btn block" id="share-send">카톡 등으로 보내기</button>
 <p class="small"><b>관리 링크</b> — 내용 확인·삭제용. 다시 보여드릴 수 없으니 꼭 보관하세요.</p>
-<div class="linkbox"><input readonly id="manage"><button class="btn ghost sm copy">복사</button></div></section>`,
+<div class="linkbox"><input readonly id="manage"><button type="button" class="btn ghost sm copy">복사</button></div></section>
+</div></section>`,
   }));
 }
 
